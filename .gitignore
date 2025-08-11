@@ -1,0 +1,33 @@
+# Build artifacts
+build/
+dist/
+*.spec
+
+# Virtual environments
+venv/
+venv_*/
+env/
+.venv/
+
+# PyInstaller
+*.manifest
+*.pyc
+__pycache__/
+
+# macOS
+.DS_Store
+*.app
+
+# Windows
+*.exe
+*.msi
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+logs/
