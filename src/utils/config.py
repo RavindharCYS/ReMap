@@ -1,40 +1,50 @@
-"""Configuration management."""
+"""Configuration management for ReMap."""
 
-import os
 import json
 from pathlib import Path
-from typing import Dict, Any
-from models.settings import ScanSettings
+
+from ..models.settings import ScanSettings
+from ..utils.logger import setup_logger
+
+logger = setup_logger(__name__)
 
 class ConfigManager:
-    """Manages application configuration."""
+    """Manages application configuration, including loading and saving settings."""
     
     def __init__(self):
         self.config_dir = Path.home() / ".remap"
-        self.config_file = self.config_dir / "settings.json"
-        self.ensure_config_directory()
+        self.settings_file = self.config_dir / "settings.json"
+        self.scans_dir = self.config_dir / "scans"
+        self.reports_dir = self.config_dir / "reports"
+        self.logs_dir = self.config_dir / "logs"
+        self._ensure_directories()
         
-    def ensure_config_directory(self):
-        """Create configuration directory if it doesn't exist."""
-        self.config_dir.mkdir(exist_ok=True)
+    def _ensure_directories(self):
+        """Create configuration directories if they don't exist."""
+        try:
+            for d in [self.config_dir, self.scans_dir, self.reports_dir, self.logs_dir]:
+                d.mkdir(exist_ok=True, parents=True)
+        except OSError as e:
+            # Handle potential permissions errors
+            logger.error(f"Could not create necessary directory {d}: {e}")
     
     def load_settings(self) -> ScanSettings:
-        """Load settings from file or return defaults."""
-        if self.config_file.exists():
+        """Load settings from the JSON file or return default settings if not found/invalid."""
+        if self.settings_file.exists():
             try:
-                return ScanSettings.load_from_file(str(self.config_file))
+                return ScanSettings.load_from_file(str(self.settings_file))
+            except (json.JSONDecodeError, TypeError, KeyError) as e:
+                logger.warning(f"Error loading settings file at {self.settings_file}: {e}. Using defaults.")
             except Exception as e:
-                print(f"Error loading settings: {e}")
+                 logger.error(f"Unexpected error loading settings: {e}", exc_info=True)
         
-        return ScanSettings()  # Return defaults
+        logger.info("No valid settings file found, using default settings.")
+        return ScanSettings() # Return defaults
     
     def save_settings(self, settings: ScanSettings):
-        """Save settings to file."""
+        """Save settings to the JSON file."""
         try:
-            settings.save_to_file(str(self.config_file))
+            settings.save_to_file(str(self.settings_file))
+            logger.info(f"Settings successfully saved to {self.settings_file}")
         except Exception as e:
-            print(f"Error saving settings: {e}")
-    
-    def get_default_settings_path(self) -> str:
-        """Get path to default settings file."""
-        return os.path.join(os.path.dirname(__file__), "..", "..", "resources", "config", "default_settings.json")
+            logger.error(f"Error saving settings to {self.settings_file}: {e}", exc_info=True)

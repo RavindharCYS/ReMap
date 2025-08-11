@@ -1,121 +1,24 @@
 {
-  "_metadata": {
-    "version": "1.0.0",
-    "description": "Default settings for ReMap Network Security Scanner",
-    "created": "2024-01-01T00:00:00Z",
-    "last_updated": "2024-01-01T00:00:00Z"
-  },
-  "scan_settings": {
-    "enable_rate_limit": false,
-    "rate_limit_value": 100,
     "enable_service_detection": true,
-    "enable_version_detection": true,
+    "enable_script_scan": true,
     "enable_os_detection": false,
-    "enable_script_scan": false,
-    "timeout": 300,
-    "max_retries": 3,
-    "scan_delay": 0.0,
+    "enable_aggressive_scan": false,
+    "default_scan_type": "1000",
     "verbose_output": false,
     "save_xml": true,
-    "default_scan_type": "fast",
+    "timeout": 600,
+    "enable_rate_limit": false,
+    "rate_limit_value": 100,
+    "scan_delay": 0.0,
     "timing_template": 4,
-    "auto_escalate_privileges": false
-  },
-  "analysis_settings": {
     "enable_tls_analysis": true,
     "enable_ssl_analysis": true,
     "enable_smb_analysis": true,
     "enable_web_detection": true,
-    "enable_vulnerability_scan": true,
-    "analysis_workers": 10,
-    "analysis_timeout": 30,
-    "max_concurrent_hosts": 50,
-    "deep_analysis": false,
-    "follow_redirects": true,
-    "verify_ssl_certificates": false
-  },
-  "output_settings": {
-    "output_directory": "",
-    "auto_create_directories": true,
-    "cleanup_days": 30,
-    "max_log_files": 10,
-    "compress_old_logs": true,
-    "export_formats": ["html", "json", "csv"],
-    "default_export_format": "html",
-    "include_timestamps": true,
-    "sanitize_filenames": true
-  },
-  "gui_settings": {
-    "theme": "Default",
-    "auto_refresh": true,
     "show_tooltips": true,
     "confirm_actions": true,
     "remember_window": true,
-    "window_width": 1200,
-    "window_height": 800,
-    "window_x": -1,
-    "window_y": -1,
-    "maximized": false,
-    "show_status_bar": true,
-    "auto_expand_results": false,
-    "result_page_size": 100
-  },
-  "logging_settings": {
-    "log_level": "INFO",
-    "log_to_file": true,
-    "log_file_size_mb": 10,
-    "log_file_count": 5,
-    "console_log_level": "INFO",
-    "file_log_level": "DEBUG",
-    "log_format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-    "date_format": "%Y-%m-%d %H:%M:%S"
-  },
-  "security_settings": {
-    "confirm_destructive": true,
-    "validate_targets": true,
-    "warn_large_scans": true,
-    "large_scan_threshold": 100,
-    "allow_privileged_ports": false,
-    "restrict_local_scans": false,
-    "require_confirmation_admin": true,
-    "audit_log": true
-  },
-  "network_settings": {
-    "network_interface": "Auto-detect",
-    "source_port": 0,
-    "dns_servers": [],
-    "use_system_dns": true,
-    "ipv6_support": false,
-    "proxy_settings": {
-      "enabled": false,
-      "host": "",
-      "port": 8080,
-      "username": "",
-      "password": ""
-    }
-  },
-  "advanced_settings": {
-    "nmap_path": "",
-    "custom_nmap_args": "",
-    "max_memory_usage_mb": 512,
-    "temp_directory": "",
-    "cache_dns_results": true,
-    "cache_duration_hours": 24,
-    "enable_debug_mode": false,
-    "performance_mode": "balanced",
-    "thread_pool_size": 20
-  },
-  "update_settings": {
-    "check_for_updates": true,
-    "auto_download_updates": false,
-    "update_channel": "stable",
-    "last_update_check": "",
-    "update_server": "https://api.remap-scanner.com/updates"
-  },
-  "plugins": {
-    "enabled_plugins": [],
-    "plugin_directory": "plugins",
-    "auto_load_plugins": false,
-    "allow_unsigned_plugins": false
-  }
+    "window_width": 1400,
+    "window_height": 900,
+    "nmap_path": ""
 }
